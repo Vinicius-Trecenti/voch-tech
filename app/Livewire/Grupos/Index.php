@@ -39,6 +39,7 @@ class Index extends Component
     public function openModalDelete($row)
     {
         $this->grupoNome = $row['nome'];
+        $this->grupo = $row;
         $this->showModalDelete = true;
     }
 
@@ -60,6 +61,13 @@ class Index extends Component
         $this->reset('nome');
 
         redirect(route('grupos'))->with('success', 'Grupo atualizado com sucesso');
+    }
+
+    public function delete()
+    {
+        Grupo::where('id', $this->grupo['id'])->delete();
+        $this->showModalDelete = false;
+        redirect(route('grupos'))->with('success', 'Grupo deletado com sucesso');
     }
 
     public function render()

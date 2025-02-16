@@ -35,6 +35,8 @@ class Index extends Component
 
     public $grupo_id;
 
+    public $bandeira;
+
     public function mount(){
         $options = Grupo::all()->toArray();
 
@@ -78,9 +80,18 @@ class Index extends Component
 
     public function openModalDelete($row)
     {
-
+        $this->bandeira = $row;
         $this->nome = $row['nome'];
         $this->showModalDelete = true;
+    }
+
+    public function delete(){
+        Bandeira::where('id', $this->bandeira['id'])->delete();
+        $this->showModalDelete = false;
+
+        $this->reset('nome');
+
+        redirect(route('bandeiras'))->with('success', 'Bandeira deletada com sucesso');
     }
 
     public function render()
