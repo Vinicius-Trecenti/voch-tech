@@ -1,7 +1,13 @@
 <x-app-layout>
     <x-slot name="header">
+        @if(session('success'))
+            <div class="mb-4">
+                <x-ts-alert color="green" icon="check-circle"> {{ session('success') }} </x-ts-alert>
+            </div>
+        @endif
+
         <h2 class="flex gap-2 items-center font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            <x-ts-icon name="flag" class="h-5 w-5"/>
+            <x-ts-icon name="flag" class="h-5 w-5" />
             {{ __('Bandeiras') }}
         </h2>
     </x-slot>
@@ -12,6 +18,9 @@
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     {{ __("Gerencie as bandeiras") }}
                 </div>
+
+                <livewire:bandeiras.create />
+                <livewire:bandeiras.index />
             </div>
         </div>
     </div>

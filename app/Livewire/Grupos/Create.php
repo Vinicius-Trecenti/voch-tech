@@ -11,7 +11,7 @@ class Create extends Component
 {
     use Interactions;
 
-    public $name;
+    public $nome;
     public $showModal = false;
 
     public function openModal()
@@ -22,19 +22,20 @@ class Create extends Component
     public function save()
     {
         $this->validate([
-            'name' => 'required|min:3',
+            'nome' => 'required|min:3|max:255',
         ],
         [
-            'name.required' => 'O campo nome é obrigatório',
-            'name.min' => 'O campo nome deve ter no mínimo 3 caracteres',
+            'nome.required' => 'O campo nome é obrigatório',
+            'nome.min' => 'O campo nome deve ter no mínimo 3 caracteres',
+            'nome.max' => 'O campo nome deve ter no maximo 255 caracteres',
         ]);
 
         Grupo::create([
-            'nome' => $this->name,
+            'nome' => $this->nome,
         ]);
 
         $this->showModal = false;
-        $this->reset('name');
+        $this->reset('nome');
 
         redirect(route('grupos'))->with('success', 'Grupo criado com sucesso');
     }

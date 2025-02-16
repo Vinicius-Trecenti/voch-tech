@@ -10,10 +10,11 @@ class Colaborador extends Model
     use HasFactory;
 
     protected $table = 'colaboradores';
-    
+
     protected $fillable = [
         'nome',
         'email',
+        'cpf',
         'telefone',
         'unidade_id',
     ];

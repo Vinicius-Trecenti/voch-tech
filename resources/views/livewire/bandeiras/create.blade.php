@@ -1,11 +1,11 @@
 <div class="flex ml-4 mt-4">
-    <x-ts-button icon="square-3-stack-3d" position="left" outline wire:click="openModal">
-        Criar Grupos
+    <x-ts-button icon="flag" position="left" outline wire:click="openModal">
+        Criar Bandeira
     </x-ts-button>
 
     <div x-data="{ open: @entangle('showModal') }" x-show="open" x-transition.opacity class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
         <div class="bg-white p-6 rounded-lg w-[500px]">
-            <h2 class="text-xl font-semibold mb-4">Criar Grupos</h2>
+            <h2 class="text-xl font-semibold mb-4">Criar Bandeira</h2>
 
             <div class="grid grid-cols-12 gap-4">
                 <div class="col-span-12">
@@ -13,7 +13,12 @@
                 </div>
 
                 <div class="col-span-12">
-                    <x-ts-input label="Nome do grupo" wire:model="nome" />
+                    <x-ts-input label="Nome da bandeira" wire:model="nome" />
+                </div>
+
+                <div class="col-span-12">
+                    <x-ts-select.styled placeholder="Selecione.." label="Grupo econômico" wire:model.live="grupo_id"
+                        select="label:label|value:value" :options="$grupos" />
                 </div>
             </div>
 
