@@ -4,16 +4,17 @@ namespace App\Livewire\Bandeiras;
 
 use Livewire\Component;
 use Livewire\WithPagination;
-
+use Illuminate\Database\Eloquent\Builder;
+use App\Models\Grupo;
 use App\Models\Bandeira;
 
 class Index extends Component
 {
     use WithPagination;
 
-    // public ?int $quantity = 10;
+    public ?int $quantity = 10;
 
-    // public ?string $search = null;
+    public ?string $search = null;
 
     public array $headers = [
         ['index' => 'id', 'label' => 'ID'],
@@ -24,11 +25,74 @@ class Index extends Component
         ['index' => 'actions', 'label' => 'Ações'],
     ];
 
+    public $showModalEdit = false;
+
+    public $showModalDelete = false;
+
+    public $nome;
+
+    public $grupos;
+
+    public $grupo_id;
+
+    public function mount(){
+        $options = Grupo::all()->toArray();
+
+        foreach($options as $option){
+            $this->grupos[] = [
+                'label' => $option['nome'],
+                'value' => $option['id']
+            ];
+        };
+    }
+
+    public function openModalEdit($row)
+    {
+        $this->grupo_id = $row['grupo_id'];
+        $this->nome = $row['nome'];
+        $this->showModalEdit = true;
+    }
+
+    public function edit(){
+
+        $this->validate([
+            'nome' => 'required|min:3',
+            'grupo_id' => 'required',
+        ],[
+            'nome.required' => 'O campo nome é obrigatório',
+            'nome.min' => 'O campo nome deve ter no mínimo 3 caracteres',
+            'grupo_id.required' => 'O campo grupo é obrigatório',
+        ]);
+
+        Bandeira::where('id', $this->grupo_id)->update([
+            'nome' => $this->nome,
+            'grupo_id' => $this->grupo_id
+        ]);
+
+        $this->showModalEdit = false;
+        $this->reset('nome');
+        $this->reset('grupo_id');
+
+        redirect(route('bandeiras'))->with('success', 'Bandeira atualizada com sucesso');
+    }
+
+    public function openModalDelete($row)
+    {
+
+        $this->nome = $row['nome'];
+        $this->showModalDelete = true;
+    }
 
     public function render()
     {
         return view('livewire.bandeiras.index', [
-            'rows' => Bandeira::all(),
+            'rows' => Bandeira::query()
+                ->when($this->search, function (Builder $query) {
+                    return $query->where('nome', 'like', "%{$this->search}%");
+                })
+                ->paginate($this->quantity)
+                ->withQueryString(),
+
         ]);
     }
 }

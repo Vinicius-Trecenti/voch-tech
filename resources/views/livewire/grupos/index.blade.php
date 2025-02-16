@@ -12,7 +12,7 @@
 
     {{-- Modal de Edição --}}
     <div x-data="{ open: @entangle('showModalEdit') }" x-show="open" x-transition.opacity class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-        <div class="bg-white p-6 rounded-lg w-96">
+        <div class="bg-white p-6 rounded-lg w-[500px]">
             <h2 class="text-xl font-semibold mb-4 text-black">Editar grupo</h2>
 
             <div class="grid grid-cols-12 gap-4">
@@ -25,7 +25,7 @@
                 </div>
             </div>
 
-            <div class="flex justify-center space-x-4 mt-4">
+            <div class="flex justify-center space-x-4 mt-12">
                 <x-ts-button color="gray" x-on:click="open = false">
                     {{ __('Cancelar') }}
                 </x-ts-button>
@@ -39,7 +39,7 @@
 
     {{-- Modal de Exclusão --}}
     <div x-data="{ open: @entangle('showModalDelete') }" x-show="open" x-transition.opacity class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-        <div class="bg-white p-6 rounded-lg w-96">
+        <div class="bg-white p-6 rounded-lg w-[500px]">
             <h2 class="text-xl font-semibold mb-4 text-black">Deletar grupo</h2>
 
             <div class="grid grid-cols-12 gap-4">
@@ -50,7 +50,7 @@
                 </div>
             </div>
 
-            <div class="flex justify-center space-x-4 mt-4">
+            <div class="flex justify-center space-x-4 mt-12">
                 <x-ts-button color="gray" x-on:click="open = false">
                     {{ __('Cancelar') }}
                 </x-ts-button>
