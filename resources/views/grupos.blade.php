@@ -1,18 +1,25 @@
 <x-app-layout>
     <x-slot name="header">
+        @if(session('success'))
+            <div class="mb-4">
+                <x-ts-alert color="green" icon="check-circle"> {{ session('success') }} </x-ts-alert>
+            </div>
+        @endif
+
         <h2 class="flex gap-2 items-center font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            <x-ts-icon name="clipboard-document-list" class="h-5 w-5"/>
-            {{ __('Dashboard') }}
+            <x-ts-icon name="square-3-stack-3d" class="h-5 w-5"/>
+            {{ __('Grupos') }}
         </h2>
     </x-slot>
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 dark:text-gray-100">
-                    {{ __("Bem vindo ao Dashboard!") }}
-                </div>
+                <livewire:grupos.create />
+                <livewire:grupos.index />
             </div>
         </div>
     </div>
 </x-app-layout>
+
+
