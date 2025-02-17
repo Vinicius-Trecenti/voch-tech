@@ -53,8 +53,10 @@ class Index extends Component
             'nome.min' => 'O campo nome deve ter no mínimo 3 caracteres',
         ]);
 
-        Grupo::where('id', $this->grupo['id'])->update([
-            'nome' => $this->nome
+        $grupo = Grupo::where('id', $this->grupo['id'])->first();
+
+        $grupo->update([
+            'nome' => $this->nome,
         ]);
 
         $this->showModalEdit = false;
@@ -65,7 +67,8 @@ class Index extends Component
 
     public function delete()
     {
-        Grupo::where('id', $this->grupo['id'])->delete();
+        $grupo = Grupo::where('id', $this->grupo['id'])->first();
+        $grupo->delete();
         $this->showModalDelete = false;
         redirect(route('grupos'))->with('success', 'Grupo deletado com sucesso');
     }

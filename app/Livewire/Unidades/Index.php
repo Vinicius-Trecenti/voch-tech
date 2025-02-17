@@ -87,7 +87,9 @@ class Index extends Component
             'bandeira_id.required' => 'O campo bandeira é obrigatório',
         ]);
 
-        Unidade::where('id', $this->unidade['id'])->update([
+        $unidade = Unidade::where('id', $this->unidade['id'])->first();
+
+        $unidade->update([
             'nome_fantasia' => $this->nome_fantasia,
             'razao_social' => $this->razao_social,
             'cnpj' => $this->cnpj,
@@ -113,7 +115,8 @@ class Index extends Component
 
     public function delete()
     {
-        Unidade::where('id', $this->unidade['id'])->delete();
+        $unidade = Unidade::where('id', $this->unidade['id'])->first();
+        $unidade->delete();
         $this->showModalDelete = false;
 
         $this->reset('unidade');

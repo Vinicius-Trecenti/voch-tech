@@ -86,7 +86,9 @@ class Index extends Component
             'unidade_id.required' => 'O campo unidade é obrigatório',
         ]);
 
-        Colaborador::where('id', $this->colaborador['id'])->update([
+        $colaborador = Colaborador::where('id', $this->colaborador['id'])->first();
+
+        $colaborador->update([
             'nome' => $this->nome,
             'email' => $this->email,
             'cpf' => $this->cpf,
@@ -112,7 +114,9 @@ class Index extends Component
     }
 
     public function delete(){
-        Colaborador::where('id', $this->colaborador['id'])->delete();
+        $colaborador = Colaborador::where('id', $this->colaborador['id'])->first();
+        $colaborador->delete();
+
         $this->showModalDelete = false;
 
         $this->reset('colaborador');

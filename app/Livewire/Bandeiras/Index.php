@@ -50,6 +50,7 @@ class Index extends Component
 
     public function openModalEdit($row)
     {
+        $this->bandeira = $row;
         $this->grupo_id = $row['grupo_id'];
         $this->nome = $row['nome'];
         $this->showModalEdit = true;
@@ -66,7 +67,9 @@ class Index extends Component
             'grupo_id.required' => 'O campo grupo é obrigatório',
         ]);
 
-        Bandeira::where('id', $this->grupo_id)->update([
+        $bandeira = Bandeira::where('id', $this->bandeira['id'])->first();
+
+        $bandeira->update([
             'nome' => $this->nome,
             'grupo_id' => $this->grupo_id
         ]);
@@ -86,7 +89,8 @@ class Index extends Component
     }
 
     public function delete(){
-        Bandeira::where('id', $this->bandeira['id'])->delete();
+        $bandeira = Bandeira::where('id', $this->bandeira['id'])->first();
+        $bandeira->delete();
         $this->showModalDelete = false;
 
         $this->reset('nome');
