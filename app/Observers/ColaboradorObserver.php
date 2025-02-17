@@ -2,8 +2,8 @@
 
 namespace App\Observers;
 
-use App\Models\Audit;
 use App\Models\Colaborador;
+use App\Jobs\SalvarAudit;
 use Illuminate\Support\Facades\Auth;
 
 class ColaboradorObserver
@@ -13,7 +13,7 @@ class ColaboradorObserver
      */
     public function created(Colaborador $colaborador): void
     {
-        Audit::create([
+        SalvarAudit::dispatch([
             'evento'         => "Criação",
             'user_id'        => Auth::user()->id,
             'data'           => now(),
@@ -29,7 +29,7 @@ class ColaboradorObserver
      */
     public function updated(Colaborador $colaborador): void
     {
-        Audit::create([
+        SalvarAudit::dispatch([
             'evento'         => "Atualização",
             'user_id'        => Auth::user()->id,
             'data'           => now(),
@@ -48,7 +48,7 @@ class ColaboradorObserver
      */
     public function deleted(Colaborador $colaborador): void
     {
-        Audit::create([
+        SalvarAudit::dispatch([
             'evento'         => "Exclusão",
             'user_id'        => Auth::user()->id,
             'data'           => now(),

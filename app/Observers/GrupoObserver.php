@@ -2,7 +2,7 @@
 
 namespace App\Observers;
 
-use App\Models\Audit;
+use App\Jobs\SalvarAudit;
 use App\Models\Grupo;
 use Illuminate\Support\Facades\Auth;
 
@@ -13,7 +13,7 @@ class GrupoObserver
      */
     public function created(Grupo $grupo): void
     {
-        Audit::create([
+        SalvarAudit::dispatch([
             'evento'         => "Criação",
             'user_id'        => Auth::user()->id,
             'data'           => now(),
@@ -29,7 +29,7 @@ class GrupoObserver
      */
     public function updated(Grupo $grupo): void
     {
-        Audit::create([
+        SalvarAudit::dispatch([
             'evento'         => "Atualização",
             'user_id'        => Auth::user()->id,
             'data'           => now(),
@@ -48,7 +48,7 @@ class GrupoObserver
      */
     public function deleted(Grupo $grupo): void
     {
-        Audit::create([
+        SalvarAudit::dispatch([
             'evento'         => "Exclusão",
             'user_id'        => Auth::user()->id,
             'data'           => now(),

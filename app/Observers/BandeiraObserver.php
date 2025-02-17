@@ -2,7 +2,7 @@
 
 namespace App\Observers;
 
-use App\Models\Audit;
+use App\Jobs\SalvarAudit;
 use App\Models\Bandeira;
 use Illuminate\Support\Facades\Auth;
 
@@ -13,7 +13,7 @@ class BandeiraObserver
      */
     public function created(Bandeira $bandeira): void
     {
-        Audit::create([
+        SalvarAudit::dispatch([
             'evento'         => "Criação",
             'user_id'        => Auth::user()->id,
             'data'           => now(),
@@ -29,7 +29,7 @@ class BandeiraObserver
      */
     public function updated(Bandeira $bandeira): void
     {
-        Audit::create([
+        SalvarAudit::dispatch([
             'evento'         => "Atualização",
             'user_id'        => Auth::user()->id,
             'data'           => now(),
@@ -48,7 +48,7 @@ class BandeiraObserver
      */
     public function deleted(Bandeira $bandeira): void
     {
-        Audit::create([
+        SalvarAudit::dispatch([
             'evento'            => "Exclusão",
             'user_id'           => Auth::user()->id,
             'data'              => now(),
