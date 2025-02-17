@@ -1,5 +1,5 @@
 <div class="p-4">
-    <x-ts-table :$headers :$rows filter id="bandeiras">
+    <x-ts-table :$headers :$rows paginate filter id="bandeiras">
 
         @interact('column_actions', $row)
             <div class="flex gap-2">

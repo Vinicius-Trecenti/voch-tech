@@ -1,5 +1,5 @@
 <div class="p-4">
-    <x-ts-table :$headers :$rows filter id="grupos">
+    <x-ts-table :$headers :$rows paginate filter id="grupos">
         @interact('column_actions', $row)
             <div class="flex gap-2">
                 <x-ts-button icon="pencil" position="left" outline wire:click="openModalEdit({{ $row }})"/>

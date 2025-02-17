@@ -136,10 +136,15 @@ class Index extends Component
                 ->when($this->search, function (Builder $query) {
                     return $query->where('nome', 'like', "%{$this->search}%")
                     ->orWhere('email', 'like', "%{$this->search}%")
-                    ->orWhere('cpf', 'like', "%{$this->search}%");
+                    ->orWhere('cpf', 'like', "%{$this->search}%")
+                    ->orWhere('created_at', 'like', "%{$this->search}%")
+                    ->orWhere('updated_at', 'like', "%{$this->search}%")
+                    ->orWhereHas('unidade', function (Builder $query) {
+                        return $query->where('nome_fantasia', 'like', "%{$this->search}%");
+                    });
                 })
                 ->paginate($this->quantity)
-                
+
         ]);
     }
 }

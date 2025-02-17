@@ -5,14 +5,13 @@ namespace App\Livewire\Grupos;
 use App\Models\Grupo;
 use Livewire\Component;
 use Livewire\WithPagination;
-use Livewire\WithQueryString;
 use Illuminate\Database\Eloquent\Builder;
 
 class Index extends Component
 {
     use WithPagination;
 
-    public ?int $quantity = 10;
+    public ?int $quantity = 5;
 
     public ?string $search = null;
 
@@ -79,7 +78,9 @@ class Index extends Component
         return view('livewire.grupos.index', [
             'rows' => Grupo::query()
                 ->when($this->search, function (Builder $query) {
-                    return $query->where('nome', 'like', "%{$this->search}%");
+                    return $query->where('nome', 'like', "%{$this->search}%")
+                    ->orWhere('created_at', 'like', "%{$this->search}%")
+                    ->orWhere('updated_at', 'like', "%{$this->search}%");
                 })
                 ->paginate($this->quantity)
         ]);

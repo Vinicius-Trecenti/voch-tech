@@ -1,5 +1,5 @@
 <div class="p-4">
-    <x-ts-table :$headers :$rows filter id="logs">
+    <x-ts-table :$headers :$rows paginate filter id="logs">
         @interact('column_evento', $row)
             @if($row['evento'] == 'Criação')
                 <x-ts-badge text="Criação" color="green"/>

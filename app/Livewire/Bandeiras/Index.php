@@ -103,7 +103,13 @@ class Index extends Component
         return view('livewire.bandeiras.index', [
             'rows' => Bandeira::query()
                 ->when($this->search, function (Builder $query) {
-                    return $query->where('nome', 'like', "%{$this->search}%");
+
+                    return $query->where('nome', 'like', "%{$this->search}%")
+                    ->orWhere('created_at', 'like', "%{$this->search}%")
+                    ->orWhere('updated_at', 'like', "%{$this->search}%")
+                    ->orWhereHas('grupo', function (Builder $query) {
+                        return $query->where('nome', 'like', "%{$this->search}%");
+                    });
                 })
                 ->paginate($this->quantity)
 
