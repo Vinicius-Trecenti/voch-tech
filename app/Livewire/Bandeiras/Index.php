@@ -106,7 +106,6 @@ class Index extends Component
                     return $query->where('nome', 'like', "%{$this->search}%");
                 })
                 ->paginate($this->quantity)
-                ->withQueryString(),
 
         ]);
     }

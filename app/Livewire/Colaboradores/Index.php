@@ -139,7 +139,7 @@ class Index extends Component
                     ->orWhere('cpf', 'like', "%{$this->search}%");
                 })
                 ->paginate($this->quantity)
-                ->withQueryString(),
+                
         ]);
     }
 }

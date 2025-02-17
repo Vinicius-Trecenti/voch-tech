@@ -24,6 +24,10 @@ Route::view('colaboradores', 'colaboradores')
     ->middleware(['auth', 'verified'])
     ->name('colaboradores');
 
+Route::view('logs', 'logs')
+    ->middleware(['auth', 'verified'])
+    ->name('logs');
+
 Route::view('profile', 'profile')
     ->middleware(['auth'])
     ->name('profile');

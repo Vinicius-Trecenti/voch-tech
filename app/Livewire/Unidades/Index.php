@@ -134,7 +134,7 @@ class Index extends Component
                 ->orWhere('cnpj', 'like', "%{$this->search}%");
             })
             ->paginate($this->quantity)
-            ->withQueryString(),
+            
         ]);
     }
 }
