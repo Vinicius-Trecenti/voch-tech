@@ -8,9 +8,13 @@ use Illuminate\Database\Eloquent\Builder;
 use Livewire\WithPagination;
 use App\Models\Unidade;
 
+use TallStackUi\Traits\Interactions;
+
 class Index extends Component
 {
     use WithPagination;
+
+    use Interactions;
 
     public ?int $quantity = 10;
 
@@ -88,7 +92,7 @@ class Index extends Component
 
         $colaborador = Colaborador::where('id', $this->colaborador['id'])->first();
 
-        $colaborador->update([
+        $status = $colaborador->update([
             'nome' => $this->nome,
             'email' => $this->email,
             'cpf' => $this->cpf,
@@ -102,7 +106,11 @@ class Index extends Component
         $this->reset('cpf');
         $this->reset('unidade_id');
 
-        redirect(route('colaboradores'))->with('success', 'Colaborador atualizado com sucesso');
+        ($status) ?
+        $this->toast()->timeout(seconds: 5)->info('Sucesso', 'Colaborador atualizado com sucesso')->flash()->send() :
+        $this->toast()->timeout(seconds: 5)->error('Erro', 'Ocorreu um erro ao atualizar o colaborador')->flash()->send();
+
+        redirect(route('colaboradores'));
     }
 
     public function openModalDelete($row)
@@ -115,7 +123,7 @@ class Index extends Component
 
     public function delete(){
         $colaborador = Colaborador::where('id', $this->colaborador['id'])->first();
-        $colaborador->delete();
+        $status = $colaborador->delete();
 
         $this->showModalDelete = false;
 
@@ -125,7 +133,11 @@ class Index extends Component
         $this->reset('email');
         $this->reset('unidade_id');
 
-        redirect(route('colaboradores'))->with('success', 'Colaborador deletado com sucesso');
+        ($status) ?
+        $this->toast()->timeout(seconds: 5)->info('Sucesso', 'Colaborador deletado com sucesso')->flash()->send() :
+        $this->toast()->timeout(seconds: 5)->error('Erro', 'Ocorreu um erro ao deletar o colaborador')->flash()->send();
+
+        redirect(route('colaboradores'));
 
     }
 

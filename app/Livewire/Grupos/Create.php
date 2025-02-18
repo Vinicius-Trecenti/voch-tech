@@ -30,14 +30,18 @@ class Create extends Component
             'nome.max' => 'O campo nome deve ter no maximo 255 caracteres',
         ]);
 
-        Grupo::create([
+        $status = Grupo::create([
             'nome' => $this->nome,
         ]);
 
         $this->showModal = false;
         $this->reset('nome');
 
-        redirect(route('grupos'))->with('success', 'Grupo criado com sucesso');
+        ($status) ?
+        $this->toast()->timeout(seconds: 5)->success('Sucesso', 'O grupo foi criado com sucesso')->flash()->send() :
+        $this->toast()->timeout(seconds: 5)->error('Erro', 'Ocorreu um erro ao criar o grupo')->flash()->send();
+
+        redirect(route('grupos'));
     }
 
     public function render()

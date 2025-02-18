@@ -8,9 +8,13 @@ use Illuminate\Database\Eloquent\Builder;
 use App\Models\Grupo;
 use App\Models\Bandeira;
 
+use TallStackUi\Traits\Interactions;
+
 class Index extends Component
 {
     use WithPagination;
+
+    use Interactions;
 
     public ?int $quantity = 10;
 
@@ -69,7 +73,7 @@ class Index extends Component
 
         $bandeira = Bandeira::where('id', $this->bandeira['id'])->first();
 
-        $bandeira->update([
+        $status =   $bandeira->update([
             'nome' => $this->nome,
             'grupo_id' => $this->grupo_id
         ]);
@@ -78,7 +82,11 @@ class Index extends Component
         $this->reset('nome');
         $this->reset('grupo_id');
 
-        redirect(route('bandeiras'))->with('success', 'Bandeira atualizada com sucesso');
+        ($status) ?
+        $this->toast()->timeout(seconds: 5)->info('Sucesso', 'A bandeira foi atualizada com sucesso')->flash()->send() :
+        $this->toast()->timeout(seconds: 5)->error('Erro', 'Ocorreu um erro ao atualizar a bandeira')->flash()->send();
+
+        redirect(route('bandeiras'));
     }
 
     public function openModalDelete($row)
@@ -90,12 +98,16 @@ class Index extends Component
 
     public function delete(){
         $bandeira = Bandeira::where('id', $this->bandeira['id'])->first();
-        $bandeira->delete();
+        $status = $bandeira->delete();
         $this->showModalDelete = false;
 
         $this->reset('nome');
 
-        redirect(route('bandeiras'))->with('success', 'Bandeira deletada com sucesso');
+        ($status) ?
+        $this->toast()->timeout(seconds: 5)->info('Sucesso', 'A bandeira foi deletada com sucesso')->flash()->send() :
+        $this->toast()->timeout(seconds: 5)->error('Erro', 'Ocorreu um erro ao deletar a bandeira')->flash()->send();
+
+        redirect(route('bandeiras'));
     }
 
     public function render()

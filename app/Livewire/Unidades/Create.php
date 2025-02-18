@@ -6,8 +6,12 @@ use Livewire\Component;
 use App\Models\Bandeira;
 use App\Models\Unidade;
 
+use TallStackUi\Traits\Interactions;
+
 class Create extends Component
 {
+    use Interactions;
+
     public $showModal = false;
 
     public $nome_fantasia;
@@ -51,7 +55,7 @@ class Create extends Component
             'cnpj.unique' => 'O CNPJ informado já existe na base de dados',
         ]);
 
-        Unidade::create([
+        $status = Unidade::create([
             'nome_fantasia' => $this->nome_fantasia,
             'razao_social' => $this->razao_social,
             'cnpj' => $this->cnpj,
@@ -64,7 +68,11 @@ class Create extends Component
         $this->reset('cnpj');
         $this->reset('bandeira_id');
 
-        redirect(route('unidades'))->with('success', 'Unidade criada com sucesso');
+        ($status) ?
+        $this->toast()->timeout(seconds: 5)->success('Sucesso', 'A unidade foi criada com sucesso')->flash()->send() :
+        $this->toast()->timeout(seconds: 5)->error('Erro', 'Ocorreu um erro ao criar a unidade')->flash()->send();
+
+        redirect(route('unidades'));
     }
 
     public function openModal()

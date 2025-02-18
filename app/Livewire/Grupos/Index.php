@@ -7,9 +7,13 @@ use Livewire\Component;
 use Livewire\WithPagination;
 use Illuminate\Database\Eloquent\Builder;
 
+use TallStackUi\Traits\Interactions;
+
 class Index extends Component
 {
     use WithPagination;
+
+    use Interactions;
 
     public ?int $quantity = 5;
 
@@ -55,22 +59,31 @@ class Index extends Component
 
         $grupo = Grupo::where('id', $this->grupo['id'])->first();
 
-        $grupo->update([
+        $status = $grupo->update([
             'nome' => $this->nome,
         ]);
 
         $this->showModalEdit = false;
         $this->reset('nome');
 
-        redirect(route('grupos'))->with('success', 'Grupo atualizado com sucesso');
+        ($status) ?
+        $this->toast()->timeout(seconds: 5)->info('Sucesso', 'O grupo foi atualizado com sucesso')->flash()->send() :
+        $this->toast()->timeout(seconds: 5)->error('Erro', 'Ocorreu um erro ao atualizar o grupo')->flash()->send();
+
+        redirect(route('grupos'));
     }
 
     public function delete()
     {
         $grupo = Grupo::where('id', $this->grupo['id'])->first();
-        $grupo->delete();
+        $status = $grupo->delete();
         $this->showModalDelete = false;
-        redirect(route('grupos'))->with('success', 'Grupo deletado com sucesso');
+
+        ($status) ?
+        $this->toast()->timeout(seconds: 5)->info('Sucesso', 'O grupo foi deletado com sucesso')->flash()->send() :
+        $this->toast()->timeout(seconds: 5)->error('Erro', 'Ocorreu um erro ao deletar o grupo')->flash()->send();
+
+        redirect(route('grupos'));
     }
 
     public function render()

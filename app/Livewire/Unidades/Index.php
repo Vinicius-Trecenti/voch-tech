@@ -8,9 +8,13 @@ use Illuminate\Database\Eloquent\Builder;
 use Livewire\WithPagination;
 use App\Models\Bandeira;
 
+use TallStackUi\Traits\Interactions;
+
 class Index extends Component
 {
     use WithPagination;
+
+    use Interactions;
 
     public ?int $quantity = 10;
 
@@ -89,7 +93,7 @@ class Index extends Component
 
         $unidade = Unidade::where('id', $this->unidade['id'])->first();
 
-        $unidade->update([
+        $status = $unidade->update([
             'nome_fantasia' => $this->nome_fantasia,
             'razao_social' => $this->razao_social,
             'cnpj' => $this->cnpj,
@@ -103,7 +107,11 @@ class Index extends Component
         $this->reset('cnpj');
         $this->reset('bandeira_id');
 
-        redirect(route('unidades'))->with('success', 'Unidade atualizada com sucesso');
+        ($status) ?
+        $this->toast()->timeout(seconds: 5)->info('Sucesso', 'Unidade atualizada com sucesso')->flash()->send() :
+        $this->toast()->timeout(seconds: 5)->error('Erro', 'Ocorreu um erro ao atualizar a unidade')->flash()->send();
+
+        redirect(route('unidades'));
     }
 
     public function openModalDelete($row)
@@ -116,12 +124,16 @@ class Index extends Component
     public function delete()
     {
         $unidade = Unidade::where('id', $this->unidade['id'])->first();
-        $unidade->delete();
+        $status = $unidade->delete();
         $this->showModalDelete = false;
 
         $this->reset('unidade');
 
-        redirect(route('unidades'))->with('success', 'Unidade deletada com sucesso');
+        ($status) ?
+        $this->toast()->timeout(seconds: 5)->info('Sucesso', 'Unidade deletada com sucesso')->flash()->send() :
+        $this->toast()->timeout(seconds: 5)->error('Erro', 'Ocorreu um erro ao deletar a unidade')->flash()->send();
+
+        redirect(route('unidades'));
     }
 
     public function render()

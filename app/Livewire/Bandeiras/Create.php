@@ -6,8 +6,12 @@ use App\Models\Bandeira;
 use Livewire\Component;
 use App\Models\Grupo;
 
+use TallStackUi\Traits\Interactions;
+
 class Create extends Component
 {
+    use Interactions;
+
     public $showModal = false;
     public $nome = '';
     public $grupo_id = '';
@@ -38,7 +42,7 @@ class Create extends Component
             'grupo_id.required' => 'O campo grupo é obrigatório',
         ]);
 
-        Bandeira::create([
+        $status = Bandeira::create([
             'nome' => $this->nome,
             'grupo_id' => $this->grupo_id
         ]);
@@ -47,7 +51,11 @@ class Create extends Component
         $this->reset('nome');
         $this->reset('grupo_id');
 
-        redirect(route('bandeiras'))->with('success', 'Bandeira criada com sucesso');
+        ($status) ?
+        $this->toast()->timeout(seconds: 5)->success('Sucesso', 'A bandeira foi criada com sucesso')->flash()->send() :
+        $this->toast()->timeout(seconds: 5)->error('Erro', 'Ocorreu um erro ao criar a bandeira')->flash()->send();
+
+        redirect(route('bandeiras'));
     }
 
     public function openModal()

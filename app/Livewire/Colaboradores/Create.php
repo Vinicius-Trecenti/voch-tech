@@ -6,8 +6,12 @@ use Livewire\Component;
 use App\Models\Unidade;
 use App\Models\Colaborador;
 
+use TallStackUi\Traits\Interactions;
+
 class Create extends Component
 {
+    use Interactions;
+
     public $showModal = false;
 
     public $nome;
@@ -52,7 +56,7 @@ class Create extends Component
             'unidade_id.required' => 'O campo unidade é obrigatório',
         ]);
 
-        Colaborador::create([
+        $status = Colaborador::create([
             'nome' => $this->nome,
             'email' => $this->email,
             'cpf' => $this->cpf,
@@ -65,7 +69,11 @@ class Create extends Component
         $this->reset('cpf');
         $this->reset('unidade_id');
 
-        redirect(route('colaboradores'))->with('success', 'Colaborador criado com sucesso');
+        ($status) ?
+        $this->toast()->timeout(seconds: 5)->success('Sucesso', 'O colaborador foi criado com sucesso')->flash()->send() :
+        $this->toast()->timeout(seconds: 5)->error('Erro', 'Ocorreu um erro ao criar o colaborador')->flash()->send();
+
+        redirect(route('colaboradores'));
     }
 
 
