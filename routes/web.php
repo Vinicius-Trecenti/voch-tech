@@ -31,6 +31,10 @@ Route::view('logs', 'logs')
     ->middleware(['auth', 'verified'])
     ->name('logs');
 
+Route::view('relatorios', 'relatorios')
+    ->middleware(['auth', 'verified'])
+    ->name('relatorios');   
+
 Route::view('profile', 'profile')
     ->middleware(['auth'])
     ->name('profile');
