@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Relatorios;
 
+use App\Jobs\ExportColaboradoresJob;
 use Livewire\Component;
 use TallStackUi\Traits\Interactions;
 
@@ -67,12 +68,14 @@ class Index extends Component
         ], [
             'tipo.required' => 'O campo tipo de relatório é obrigatório',
         ]);
+
+        ExportColaboradoresJob::dispatch();
+
+        $this->toast()->info('Relatório sendo gerado', 'Aguarde alguns segundos')->send();
+
+        redirect(route('relatorios.colaboradores.export'));
     }
 
-    public function gerarPDF()
-    {
-        $this->toast()->info('Em breve', 'Funcionalidade em desenvolvimento')->send();
-    }
 
     public function render()
     {

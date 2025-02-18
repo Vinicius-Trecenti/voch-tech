@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\RelatoriosConroller;
 use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'welcome');
@@ -33,7 +34,10 @@ Route::view('logs', 'logs')
 
 Route::view('relatorios', 'relatorios')
     ->middleware(['auth', 'verified'])
-    ->name('relatorios');   
+    ->name('relatorios');
+
+Route::get('/relatorios/colaboradores/export', [RelatoriosConroller::class, 'exportColaboradores'])->name('relatorios.colaboradores.export');
+
 
 Route::view('profile', 'profile')
     ->middleware(['auth'])

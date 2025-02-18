@@ -92,9 +92,6 @@
             <x-ts-button icon="cloud-arrow-down" color="green" wire:click="gerar" >
                 {{ __('Gerar relatório Excel') }}
             </x-ts-button>
-
-            <x-ts-button icon="document-arrow-down" color="red" wire:click="gerarPDF" >
-                {{ __('Gerar relatório PDF') }}
-            </x-ts-button>
         </div>
 </div>
+
