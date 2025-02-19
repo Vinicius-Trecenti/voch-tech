@@ -90,14 +90,6 @@
             <div class="mb-2">
                 <x-ts-radio color="green" label="Ordenar por data de atualização" wire:model.live="ordenacao" id="radio-updated" value="updated_at"/>
             </div>
-
-            <div class="mb-2">
-                <x-ts-radio color="green" label="Ordenar por ASC" wire:model.live="ordenacao" id="radio-asc" value="asc"/>
-            </div>
-
-            <div class="mb-2">
-                <x-ts-radio color="green" label="Ordenar por DESC" wire:model.live="ordenacao" id="radio-desc" value="desc"/>
-            </div>
         </div>
 
         <div class="col-span-4 mt-4">
