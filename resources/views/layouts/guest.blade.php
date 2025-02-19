@@ -17,7 +17,10 @@
     <body class="font-sans text-gray-900 antialiased">
         <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100 dark:bg-gray-900">
             <div>
-                <a href="/" wire:navigate>
+                <a href="/" wire:navigate class="flex items-center gap-4">
+                    <h1 class="font-bold text-2xl text-gray-900 dark:text-gray-100">
+                        Bem vindo ao <span class="text-violet-600">{{ config('app.name', 'Plus') }}</span>
+                    </h1>
                     <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
                 </a>
             </div>
