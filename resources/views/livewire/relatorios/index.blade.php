@@ -27,6 +27,7 @@
             ]"
             label="Grupo econômico"
             select="label:label|value:value"
+            wire:model.live="grupo"
             :options="$grupos" wire:model.live="grupo" searchable/>
         </div>
 
@@ -39,6 +40,7 @@
             ]"
             label="Bandeira"
             select="label:label|value:value"
+            wire:model.live="bandeira"
             :options="$bandeiras" searchable/>
         </div>
 
@@ -51,6 +53,7 @@
             ]"
             label="Unidade"
             select="label:label|value:value"
+            wire:model.live="unidade"
             :options="$unidades" searchable/>
         </div>
 
@@ -63,6 +66,7 @@
             ]"
             label="Colaborador"
             select="label:label|value:value"
+            wire:model.live="colaborador"
             :options="$colaboradores" searchable/>
         </div>
 
@@ -86,6 +90,14 @@
             <div class="mb-2">
                 <x-ts-radio color="green" label="Ordenar por data de atualização" wire:model.live="ordenacao" id="radio-updated" value="updated_at"/>
             </div>
+
+            <div class="mb-2">
+                <x-ts-radio color="green" label="Ordenar por ASC" wire:model.live="ordenacao" id="radio-asc" value="asc"/>
+            </div>
+
+            <div class="mb-2">
+                <x-ts-radio color="green" label="Ordenar por DESC" wire:model.live="ordenacao" id="radio-desc" value="desc"/>
+            </div>
         </div>
 
         <div class="col-span-4 mt-4">
@@ -94,4 +106,3 @@
             </x-ts-button>
         </div>
 </div>
-

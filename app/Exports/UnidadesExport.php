@@ -2,11 +2,11 @@
 
 namespace App\Exports;
 
-use App\Models\Colaborador;
+use App\Models\Unidade;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 
-class ColaboradoresExport implements FromCollection, WithHeadings
+class UnidadesExport implements FromCollection, WithHeadings
 {
     protected $filtros;
 
@@ -15,16 +15,19 @@ class ColaboradoresExport implements FromCollection, WithHeadings
         $this->filtros = json_decode(urldecode($filtros), true);
     }
 
+    /**
+    * @return \Illuminate\Support\Collection
+    */
     public function collection()
     {
-        $query = Colaborador::query();
+        $query = Unidade::query();
+
+        if (!empty($this->filtros['bandeira'])) {
+            $query->where('bandeira_id', $this->filtros['bandeira']);
+        }
 
         if (!empty($this->filtros['unidade'])) {
             $query->where('unidade_id', $this->filtros['unidade']);
-        }
-
-        if (!empty($this->filtros['colaborador'])) {
-            $query->where('id', $this->filtros['colaborador']);
         }
 
         if (!empty($this->filtros['ordenacao'])) {
@@ -33,8 +36,9 @@ class ColaboradoresExport implements FromCollection, WithHeadings
 
         return $query->get();
     }
+
     public function headings(): array
     {
-        return ['ID', 'Nome', 'Email', 'CPF', 'Unidade', 'Criado em', 'Atualizado em'];
+        return ['ID', 'Nome', 'Bandeira', 'Criado em', 'Atualizado em'];
     }
 }

@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\RelatoriosConroller;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
 
 Route::view('/', 'welcome');
 
@@ -36,8 +38,8 @@ Route::view('relatorios', 'relatorios')
     ->middleware(['auth', 'verified'])
     ->name('relatorios');
 
-Route::get('/relatorios/colaboradores/export', [RelatoriosConroller::class, 'exportColaboradores'])->name('relatorios.colaboradores.export');
-
+Route::get('/relatorios/export/{tipo}', [RelatoriosConroller::class, 'export'])->name('relatorios.export');
+Route::get('/relatorios/export/{tipo}/{filtros}', [RelatoriosConroller::class, 'exportComFiltros'])->name('relatorios.export.filtros');
 
 Route::view('profile', 'profile')
     ->middleware(['auth'])

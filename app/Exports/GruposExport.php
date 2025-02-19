@@ -2,11 +2,11 @@
 
 namespace App\Exports;
 
-use App\Models\Colaborador;
+use App\Models\Grupo;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 
-class ColaboradoresExport implements FromCollection, WithHeadings
+class GruposExport implements FromCollection, WithHeadings
 {
     protected $filtros;
 
@@ -15,16 +15,15 @@ class ColaboradoresExport implements FromCollection, WithHeadings
         $this->filtros = json_decode(urldecode($filtros), true);
     }
 
+    /**
+    * @return \Illuminate\Support\Collection
+    */
     public function collection()
     {
-        $query = Colaborador::query();
+        $query = Grupo::query();
 
-        if (!empty($this->filtros['unidade'])) {
-            $query->where('unidade_id', $this->filtros['unidade']);
-        }
-
-        if (!empty($this->filtros['colaborador'])) {
-            $query->where('id', $this->filtros['colaborador']);
+        if (!empty($this->filtros['grupo'])) {
+            $query->where('grupo_id', $this->filtros['grupo']);
         }
 
         if (!empty($this->filtros['ordenacao'])) {
@@ -33,8 +32,9 @@ class ColaboradoresExport implements FromCollection, WithHeadings
 
         return $query->get();
     }
+
     public function headings(): array
     {
-        return ['ID', 'Nome', 'Email', 'CPF', 'Unidade', 'Criado em', 'Atualizado em'];
+        return ['ID', 'Nome', 'Criado em', 'Atualizado em'];
     }
 }
