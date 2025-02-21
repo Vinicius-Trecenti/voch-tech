@@ -75,5 +75,13 @@ php artisan serve
 ```bash
 php artisan queue:work
 ```
+
+7️⃣ Usuário administrador configurado  
+
+Faça login com as credenciais padrão se preferir:  
+
+**Email:** `admin@gmail.com`  
+**Senha:** `password`  
+
 Acesse http://127.0.0.1:8000 no navegador ou clique no link do terminal. 🎉
 
