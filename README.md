@@ -7,28 +7,28 @@
 > O Plus é um sistema simples utilizando Laravel que possui diversas funcionalidades e atende as solicitações do processo seletivo da Voch Tech.
 
 ## 📌 Funcionalidades
-✅ CRUD de Grupos Econômicos 
+✅ CRUD de Grupos Econômicos
 
-✅ CRUD de Bandeiras 
+✅ CRUD de Bandeiras
 
 ✅ CRUD de Unidades
 
-✅ CRUD de Colaboradores 
+✅ CRUD de Colaboradores
 
-✅ Relatórios exportáveis (Excel)  
+✅ Relatórios exportáveis (Excel)
 
-✅ Autenticação segura com Laravel Breeze  
+✅ Autenticação segura com Laravel Breeze
 
-✅ Auditoria com Observers e Jobs  
+✅ Auditoria com Observers e Jobs
 
-✅ Dashboard interativo com Livewire e Chart.js  
+✅ Dashboard interativo com Livewire e Chart.js
 
 
 ## 🛠️ Tecnologias Utilizadas
 - **Laravel 11** 🏗️
-- **Livewire** 👾  
+- **Livewire** 👾
 - **Tailwind CSS** 🎨
-- **TallstackUI** 🔥    
+- **TallstackUI** 🔥
 - **MySQL** 🐬
 
 
@@ -42,7 +42,7 @@
 
 ## 📥 Comandos
 
-1️⃣ Clone o repositório:  
+1️⃣ Clone o repositório:
 ```bash
 git clone https://github.com/Vinicius-Trecenti/voch-tech.git
 ```
@@ -68,6 +68,12 @@ php artisan migrate --seed
 
 ```bash
 php artisan serve
+```
+
+6️⃣ Inicie a fila de jobs em outro terminal:
+
+```bash
+php artisan queue:work
 ```
 Acesse http://127.0.0.1:8000 no navegador ou clique no link do terminal. 🎉
 
