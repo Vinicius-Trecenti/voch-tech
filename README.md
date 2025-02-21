@@ -47,7 +47,7 @@
 git clone https://github.com/Vinicius-Trecenti/voch-tech.git
 ```
 
-2️⃣ Instale as dependências:
+2️⃣ Instale as dependências (Entre na pasta do projeto com `cd voch-tech`):
 ```bash
 composer install
 npm install && npm run dev
