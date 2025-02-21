@@ -20,6 +20,8 @@ class DatabaseSeeder extends Seeder
             BandeiraSeeder::class,
             UnidadeSeeder::class,
             ColaboradorSeeder::class,
+
+            UserSeeder::class
         ]);
     }
 }

@@ -15,7 +15,7 @@ class UnidadeObserver
     {
         SalvarAudit::dispatch([
             'evento'         => "Criação",
-            'user_id'        => Auth::user()->id,
+            'user_id'        => Auth::check() ? Auth::user()->id : null,
             'data'           => now(),
             'ip'             => request()->ip(),
             'auditable_id'   => $unidade->id,

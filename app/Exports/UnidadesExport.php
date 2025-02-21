@@ -31,7 +31,10 @@ class UnidadesExport implements FromCollection, WithHeadings
         }
 
         if (!empty($this->filtros['ordenacao'])) {
-            $query->orderBy($this->filtros['ordenacao']);
+            if($this->filtros['ordenacao'] == 'nome') {
+                $this->filtros['ordenacao'] = 'nome_fantasia';
+            }
+            $query->orderBy($this->filtros['ordenacao'], 'asc');
         }
 
         return $query->get();
@@ -39,6 +42,6 @@ class UnidadesExport implements FromCollection, WithHeadings
 
     public function headings(): array
     {
-        return ['ID', 'Nome', 'Bandeira', 'Criado em', 'Atualizado em'];
+        return ['ID', 'Unidade', 'Bandeira', 'Criado em', 'Atualizado em'];
     }
 }

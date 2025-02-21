@@ -31,7 +31,7 @@ class BandeirasExport implements FromCollection, WithHeadings
         }
 
         if (!empty($this->filtros['ordenacao'])) {
-            $query->orderBy($this->filtros['ordenacao']);
+            $query->orderBy($this->filtros['ordenacao'], 'asc');
         }
 
         return $query->get();
